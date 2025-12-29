@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacto - CleanFix NJ</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="Index.html" class="logo"><img src="img/logo.jpeg" alt="CleanFix NJ Logo" class="logo-img"></a>
+            <div class="menu-toggle" id="menu-toggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="Index.html">Inicio</a></li>
+                <li><a href="sobre-nosotros.html">Sobre Nosotros</a></li>
+                <li><a href="limpieza-residencial.html">Limpieza Residencial</a></li>
+                <li><a href="limpieza-comercial.html">Limpieza Comercial</a></li>
+                <li><a href="reparacion-mantenimiento.html">Reparación y Mantenimiento</a></li>
+                <li><a href="contact.html">Contáctanos</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <section id="contact">
+            <div class="container">
+                <h2 class="section-title">Solicite una Cotización</h2>
+                <p style="text-align: center; max-width: 600px; margin: -2rem auto 2rem auto;"><strong>Cotización y walkthrough gratuito para property managers — sin compromiso.</strong> Rellene el formulario y le enviaremos una propuesta en 24-48 horas.</p>
+                <form id="contact-form">
+                    <label for="name">Nombre Completo</label>
+                    <input type="text" id="name" name="name" required>
+
+                    <label for="company">Empresa (opcional)</label>
+                    <input type="text" id="company" name="company">
+
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+
+                    <label for="phone">Teléfono</label>
+                    <input type="tel" id="phone" name="phone" required>
+
+                    <label for="service-type">Tipo de servicio de interés</label>
+                    <select id="service-type" name="service-type" required>
+                        <option value="">Seleccione un servicio...</option>
+                        <option value="comercial">Limpieza Comercial</option>
+                        <option value="property-manager">Servicios para Property Manager</option>
+                        <option value="residencial">Limpieza Residencial</option>
+                        <option value="mantenimiento">Mantenimiento y Reparaciones</option>
+                    </select>
+
+                    <label for="address">Dirección del Servicio</label>
+                    <input type="text" id="address" name="address">
+
+                    <label for="description">Breve descripción de lo que necesita</label>
+                    <textarea id="description" name="description" rows="4"></textarea>
+                    
+                    <label>Preferencia de contacto</label>
+                    <select id="contact-preference" name="contact-preference">
+                        <option value="email">Email</option>
+                        <option value="phone">Llamada telefónica</option>
+                    </select>
+
+                    <button type="submit">Enviar y Solicitar Cotización</button>
+                </form>
+                <div class="emergency-call">
+                    <p>¿Es una emergencia? <a href="tel:+15551234567">Llámenos ahora para una respuesta inmediata</a></p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 CleanFix NJ. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+    <a href="https://wa.me/9085361969?text=¡Hola!%20Me%20interesa%20una%20cotización%20para%20servicios%20de%20limpieza." class="whatsapp-button" target="_blank">
+        <img src="img/WhatsApp.jpeg" alt="Chat en WhatsApp" width="60">
+    </a>
+    <script src="script.js"></script>
+    <script>
+        document.getElementById('contact-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Evita que el formulario se envíe de la forma tradicional
+
+            // --- Recopilar los datos del formulario ---
+            const name = document.getElementById('name').value;
+            const company = document.getElementById('company').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const serviceType = document.getElementById('service-type').value;
+            const address = document.getElementById('address').value;
+            const description = document.getElementById('description').value;
+            const contactPreference = document.getElementById('contact-preference').value;
+
+            // --- Acción 1: Preparar y abrir WhatsApp ---
+            const phoneNumber = '9085361969'; // Tu número de WhatsApp
+            let whatsappMessage = `*Nueva Solicitud de Cotización*\n\n`;
+            whatsappMessage += `*Nombre:* ${name}\n`;
+            if (company) whatsappMessage += `*Empresa:* ${company}\n`;
+            whatsappMessage += `*Email:* ${email}\n`;
+            whatsappMessage += `*Teléfono:* ${phone}\n`;
+            whatsappMessage += `*Servicio de Interés:* ${serviceType}\n`;
+            if (address) whatsappMessage += `*Dirección:* ${address}\n`;
+            if (description) whatsappMessage += `*Descripción:* ${description}\n`;
+            whatsappMessage += `*Preferencia de Contacto:* ${contactPreference}`;
+            const encodedWhatsappMessage = encodeURIComponent(whatsappMessage);
+            const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodedWhatsappMessage}`;
+            window.open(whatsappURL, '_blank'); // Abre WhatsApp en una nueva pestaña
+
+            // --- Acción 2: Preparar y abrir el cliente de correo ---
+            const emailRecipient = 'info@cleanfixnj.com';
+            const emailSubject = `Solicitud de Cotización de: ${name}`;
+            let emailBody = `Se ha recibido una nueva solicitud de cotización:\n\n`;
+            emailBody += `Nombre: ${name}\n`;
+            if (company) emailBody += `Empresa: ${company}\n`;
+            emailBody += `Email: ${email}\n`;
+            emailBody += `Teléfono: ${phone}\n`;
+            emailBody += `Servicio de Interés: ${serviceType}\n`;
+            if (address) emailBody += `Dirección: ${address}\n`;
+            if (description) emailBody += `Descripción: ${description}\n`;
+            emailBody += `Preferencia de Contacto: ${contactPreference}\n`;
+            const encodedEmailBody = encodeURIComponent(emailBody);
+            const mailtoURL = `mailto:${emailRecipient}?subject=${encodeURIComponent(emailSubject)}&body=${encodedEmailBody}`;
+            window.location.href = mailtoURL; // Abre el cliente de correo
+        });
+    </script>
+</body>
+</html>

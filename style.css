@@ -1,0 +1,933 @@
+/* Navegación Responsive */
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.bar {
+    width: 25px;
+    height: 3px;
+    background-color: white;
+    margin: 3px 0;
+    transition: 0.3s;
+}
+
+/* Para tablets y móviles */
+@media screen and (max-width: 768px) {
+    .menu-toggle {
+        display: flex;
+        z-index: 1001; /* Asegurar que esté sobre el contenido */
+    }
+
+    .nav-links {
+        position: fixed;
+        left: -100%;
+        top: 0;
+        width: 80%;
+        height: 100vh;
+        /* Efecto Glassmorphism */
+        background: rgba(20, 30, 40, 0.85);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border-right: 1px solid rgba(255, 255, 255, 0.1);
+
+        flex-direction: column;
+        padding-top: 100px; /* Más espacio para el logo */
+        transition: left 0.4s cubic-bezier(0.23, 1, 0.32, 1); /* Transición más suave */
+        z-index: 1000;
+        margin: 0;
+    }
+
+    .nav-links.active {
+        left: 0;
+        box-shadow: 5px 0 25px rgba(0,0,0,0.5);
+    }
+
+    .nav-links li {
+        margin: 0;
+        width: 100%;
+        text-align: left;
+    }
+
+    .nav-links a {
+        display: flex;
+        align-items: center;
+        gap: 15px; /* Espacio entre el icono y el texto */
+        padding: 1.2rem 2.5rem;
+        color: #f0f0f0;
+        text-decoration: none;
+        font-size: 1.1rem;
+        font-weight: 500;
+        letter-spacing: 0.5px;
+        transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .nav-links a:hover {
+        background: rgba(255, 255, 255, 0.05);
+        color: var(--primary-color);
+        transform: translateX(10px);
+    }
+    
+    /* Iconos para los enlaces  */
+    .nav-links a[href*="sobre-nosotros"]::before { content: '👥'; }
+    .nav-links a[href*="limpieza-residencial"]::before { content: '🏠'; }
+    .nav-links a[href*="limpieza-comercial"]::before { content: '🏢'; }
+    .nav-links a[href*="reparacion-mantenimiento"]::before { content: '🛠️'; }
+    .nav-links a[href*="contact"]::before { content: '✉️'; }
+
+    .navbar .container {
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .logo-img {
+        height: 45px; /* Un poco más grande */
+        transition: transform 0.3s ease;
+    }
+    .logo-img:hover {
+        transform: scale(1.05);
+    }
+
+    /* Overlay para cerrar el menú */
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.6);
+        z-index: 999;
+        display: none;
+        opacity: 0;
+        transition: opacity 0.4s ease;
+    }
+
+    .overlay.active {
+        display: block;
+        opacity: 1;
+    }
+
+    /* Animación del menú hamburguesa (icono X) */
+    .menu-toggle.active .bar {
+        background-color: white;
+    }
+    .menu-toggle.active .bar:nth-child(1) {
+        transform: rotate(-45deg) translate(-5px, 6px);
+    }
+    .menu-toggle.active .bar:nth-child(2) {
+        opacity: 0;
+    }
+    .menu-toggle.active .bar:nth-child(3) {
+        transform: rotate(45deg) translate(-5px, -6px);
+    }
+}
+
+/* Ajustes para móviles pequeños */
+@media screen and (max-width: 480px) {
+    .nav-links {
+        width: 85%;
+    }
+    
+    .nav-links a {
+        padding: 0.8rem 1.5rem;
+        font-size: 1rem;
+    }
+    
+    .logo-img {
+        height: 35px;
+    }
+}
+
+/* Estilos para el contenido del acordeón con imagen */
+.service-content-wrapper {
+    display: flex;
+    flex-wrap: wrap; /* Para que sea responsive en móviles */
+    gap: 2rem;
+    align-items: flex-start;
+}
+
+.service-image-container {
+    flex: 1 1 300px; /* Flex-grow, flex-shrink, flex-basis */
+    max-width: 350px;
+}
+
+.service-image-container img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    object-fit: cover;
+}
+
+.service-text-container {
+    flex: 2 1 300px; /* Ocupa el doble de espacio que la imagen */
+}
+
+/* Ajustes para el botón de cotización dentro del nuevo layout */
+.service-text-container .service-cta {
+    margin-top: 1.5rem;
+    text-align: left;
+}
+
+/* En pantallas grandes, mover la imagen a la derecha */
+@media screen and (min-width: 769px) {
+    .service-text-container {
+        order: 1; /* El texto va primero (izquierda) */
+    }
+    .service-image-container {
+        order: 2; /* La imagen va después (derecha) */
+    }
+}
+
+/* Media query para que en móviles la imagen se ponga arriba */
+@media screen and (max-width: 768px) {
+    .service-content-wrapper {
+        flex-direction: column;
+    }
+    .service-image-container {
+        max-width: 100%;
+        margin-bottom: 1rem;
+    }
+}
+
+/* Animación de deslizamiento */
+@keyframes slideInLeft {
+    from {
+        transform: translateX(-100%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
+.nav-links.active {
+    animation: slideInLeft 0.3s ease-out;
+}/* Estilos para el acordeón de servicios */
+.service-accordion {
+    margin: 2rem 0;
+}
+
+.service-item {
+    margin-bottom: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.service-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+}
+
+.service-title.accordion-button {
+    background: linear-gradient(135deg, #3498db, #2c3e50);
+    color: white;
+    padding: 1.5rem;
+    margin: 0;
+    cursor: pointer;
+    font-size: 1.3rem;
+    position: relative;
+    transition: background 0.3s ease;
+}
+
+.service-title.accordion-button:hover {
+    background: linear-gradient(135deg, #2980b9, #34495e);
+}
+
+.service-title.accordion-button::after {
+    content: '+';
+    position: absolute;
+    right: 1.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.5rem;
+    font-weight: bold;
+    transition: transform 0.3s ease;
+}
+
+.service-title.accordion-button.active::after {
+    transform: translateY(-50%) rotate(45deg);
+}
+
+.service-content.accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    padding: 0 2rem;
+    transition: max-height 0.5s ease-out, padding 0.5s ease-out;
+    background: #fdfdfd;
+}
+
+.service-content.accordion-content.show {
+    max-height: 450px; /* Altura máxima para el área de scroll */
+    overflow-y: auto; /* Habilitar scroll vertical si es necesario */
+    padding: 2rem 2rem;
+    transition: max-height 0.7s ease-in-out, padding 0.5s ease-out;
+}
+
+/* Estilos para la barra de scroll personalizada (solo para navegadores Webkit) */
+.service-content.accordion-content.show::-webkit-scrollbar {
+    width: 8px;
+}
+
+.service-content.accordion-content.show::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 10px;
+}
+
+.service-content.accordion-content.show::-webkit-scrollbar-thumb {
+    background-color: var(--primary-color);
+    border-radius: 10px;
+    border: 2px solid #fdfdfd; /* Espacio entre el thumb y el track */
+}
+
+.service-content.accordion-content.show::-webkit-scrollbar-thumb:hover {
+    background-color: #0056b3;
+}
+
+.service-content h4 {
+    color: #2c3e50;
+    margin-top: 1.5rem;
+    margin-bottom: 0.8rem;
+    font-size: 1.1rem;
+}
+
+.service-content ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.service-content ul li {
+    padding: 0.3rem 0;
+    color: #555;
+    font-size: 1rem;
+}
+
+.service-cta {
+    margin-top: 1.5rem;
+    text-align: center;
+}
+
+.service-cta .cta-button {
+    background: #27ae60;
+    color: white;
+    padding: 0.8rem 1.5rem;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    display: inline-block;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.service-cta .cta-button:hover {
+    background: #219a52;
+    transform: scale(1.05);
+}
+
+.services-cta-main {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.services-cta-main .cta-button {
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    color: white;
+    padding: 1rem 2rem;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 1.1rem;
+    display: inline-block;
+    transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.services-cta-main .cta-button:hover {
+    background: linear-gradient(135deg, #c0392b, #a93226);
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(231, 76, 60, 0.4);
+}
+
+.section-subtitle {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #666;
+    margin-bottom: 2rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}body { 
+    font-family: 'Poppins', sans-serif; /* Fuente moderna y atractiva */
+    line-height: 1.6; 
+    margin: 0; 
+    padding: 0; 
+    background-color: #f4f4f4; 
+    color: #333; 
+    min-height: 100vh; 
+    display: flex; 
+    flex-direction: column; 
+}
+
+main { 
+    flex: 1; 
+}
+.container { 
+    width: 85%; 
+    margin: auto; 
+    max-width: 1200px; 
+}
+
+/* Navbar */
+.navbar {
+    background: linear-gradient(to right, #2c3e50, #34495e); /* Gradiente para más atractivo */
+    padding: 0.75rem 0; /* Reducir padding para hacerla más pequeña */
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2); /* Sombra más pronunciada para profundidad */
+    transition: box-shadow 0.3s ease; /* Transición suave */
+}
+
+.navbar:hover {
+    box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+}
+
+.navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.logo-img {
+    height: 40px; /* Reducir tamaño para barra más pequeña */
+    width: auto;
+    transition: transform 0.3s;
+}
+
+.logo:hover .logo-img {
+    transform: scale(1.1);
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+    margin: 0;
+}
+
+.nav-links a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 8px 12px; /* Reducir padding para enlaces más compactos */
+    border-radius: 5px;
+    transition: background 0.3s, color 0.3s, transform 0.3s;
+}
+
+.nav-links a:hover {
+    background: rgba(255,255,255,0.2);
+    color: #e74c3c;
+    transform: translateY(-2px); /* Efecto de elevación para atractivo */
+}
+
+.nav-links a:hover {
+    background: rgba(255,255,255,0.2);
+    color: #e74c3c;
+}
+
+.nav-links a:hover {
+    color: #e74c3c;
+}
+
+/* Navbar Styles */
+.navbar {
+    background: #2c3e50;
+    padding: 1rem 0;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    color: #fff;
+    font-size: 1.5rem;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+    margin: 0;
+}
+
+.nav-links a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover {
+    color: #e74c3c;
+}
+header#hero { 
+    background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('img/imagen1.jpeg'); /* Gradiente para mejor legibilidad */
+    background-size: cover; 
+    background-position: center; 
+    color: #ffffff; 
+    padding: 6rem 0; /* Más padding para impacto */
+    text-align: left; 
+    position: relative; 
+    animation: heroZoom 5s ease-in-out infinite; /* Animación sutil de zoom para dinamismo */
+}
+
+@keyframes heroZoom {
+    0% { background-size: 100%; }
+    50% { background-size: 105%; }
+    100% { background-size: 100%; }
+}
+
+header#hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Overlay semi-transparente para legibilidad */
+    z-index: 1;
+}
+
+header#hero .container {
+    position: relative;
+    z-index: 2;
+}
+header#hero h1 { 
+    margin: 0 0 1rem 0; 
+    font-size: 2.8rem; 
+}
+header#hero p { 
+    font-size: 1.2rem; 
+    max-width: 800px; 
+    margin: 0 auto 1.5rem auto; 
+}
+header#hero ul { 
+    list-style: none; 
+    padding: 0; 
+    margin: 0 auto 2rem auto; 
+    max-width: 700px; 
+    text-align: left; 
+}
+header#hero li { 
+    background: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%2334d399" width="20px" height="20px"><path d="M0 0h24v24H0z" fill="none"/><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>') no-repeat left center; 
+    padding-left: 30px; 
+    margin-bottom: 0.5rem; 
+}
+.cta-button { 
+    display: inline-block; 
+    padding: 12px 25px; 
+    background: linear-gradient(to right, #e74c3c, #c0392b); /* Gradiente para más atractivo */
+    color: #fff; 
+    text-decoration: none; 
+    border-radius: 30px; /* Más redondeado para modernidad */
+    font-weight: bold; 
+    font-size: 1.1rem; 
+    transition: background-color 0.3s, transform 0.3s;
+    box-shadow: 0 4px 10px rgba(231,76,60,0.4); /* Sombra para profundidad */
+    animation: pulse 2s infinite; /* Animación de pulso sutil */
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.cta-button:hover {
+    background: #c0392b;
+    transform: scale(1.05);
+}
+.cta-button:hover { 
+    background: #c0392b; 
+}
+section { 
+    padding: 3rem 0; 
+    opacity: 0; /* Inicial para animación */
+    animation: fadeInUp 1s ease-out forwards; /* Animación de entrada desde abajo */
+    animation-delay: 0.5s; /* Retraso para carga secuencial */
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(50px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.section-title { 
+    text-align: center; 
+    font-size: 2.2rem; 
+    margin-bottom: 2rem; 
+    color: #2c3e50; 
+    position: relative; /* Para pseudo-elemento */
+}
+
+.section-title::after {
+    content: '';
+    display: block;
+    width: 50px;
+    height: 3px;
+    background: #e74c3c;
+    margin: 10px auto 0;
+    animation: underlineGrow 1s ease-in-out; /* Animación de crecimiento */
+}
+
+@keyframes underlineGrow {
+    from { width: 0; }
+    to { width: 50px; }
+}
+#quick-services { 
+    background: #ffffff; 
+}
+.services-grid { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+    gap: 25px; 
+}
+
+/* Accordion Styles */
+.accordion-item {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: #f9f9f9;
+    padding: 15px;
+    text-align: center;
+}
+
+.accordion-button {
+    background: #e74c3c;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 10px;
+    transition: background 0.3s;
+}
+
+.accordion-button:hover {
+    background: #c0392b;
+}
+
+.accordion-content {
+    margin-top: 15px;
+    text-align: left;
+}
+/* Estilos para sección ¿Por qué elegirnos? */
+#why-choose-us {
+    background: linear-gradient(to bottom, #f4f4f4, #ffffff); /* Fondo suave y atractivo */
+    padding: 4rem 0;
+    text-align: center;
+}
+
+#why-choose-us h2 {
+    font-size: 2.5rem;
+    color: #2c3e50;
+    margin-bottom: 1.5rem;
+    animation: fadeInDown 1s ease-out;
+}
+
+#why-choose-us p {
+    font-size: 1.2rem;
+    max-width: 800px;
+    margin: 0 auto 2rem auto;
+    animation: fadeIn 1.5s ease-in;
+}
+
+#why-choose-us ul {
+    list-style: none;
+    padding: 0;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+#why-choose-us li {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    transition: transform 0.3s, box-shadow 0.3s;
+    opacity: 0;
+    animation: fadeInUp 0.5s ease-out forwards;
+    animation-delay: calc(0.2s * var(--i)); /* Animación secuencial para cada ítem */
+}
+
+#why-choose-us li:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+}
+
+#why-choose-us li strong {
+    display: block;
+    font-size: 1.3rem;
+    color: #e74c3c;
+    margin-bottom: 0.5rem;
+}
+
+@keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Accordion Mejorado */
+.accordion-item {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: #f9f9f9;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: box-shadow 0.3s;
+}
+
+.accordion-item:hover {
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.accordion-title {
+    margin: 0;
+    font-size: 1.8rem;
+    color: #2c3e50;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.accordion-icon {
+    font-size: 1.5rem;
+    color: #e74c3c;
+}
+
+.accordion-button {
+    background: #e74c3c;
+    color: #fff;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 30px; /* Más redondeado para modernidad */
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 15px;
+    transition: background 0.3s, transform 0.3s;
+}
+
+.accordion-button:hover {
+    background: #c0392b;
+    transform: translateY(-2px);
+}
+
+.accordion-content {
+    display: none;
+    margin-top: 20px;
+    text-align: left;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.service-image {
+    width: 70%;
+    max-height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+.service-item h3 { 
+    margin-top: 0; 
+    color: #2c3e50; 
+}
+#contact { 
+    background: #ecf0f1; 
+}
+form { 
+    max-width: 700px; 
+    margin: auto; 
+    padding: 25px; 
+    background: #fff; 
+    border-radius: 8px; 
+    box-shadow: 0 0 10px rgba(0,0,0,0.1); 
+}
+form label { 
+    display: block; 
+    margin-bottom: 8px; 
+    font-weight: bold; 
+}
+form input, form select, form textarea { 
+    width: 100%; 
+    padding: 12px; 
+    margin-bottom: 15px; 
+    border: 1px solid #ccc; 
+    border-radius: 4px; 
+    box-sizing: border-box; 
+}
+form button { 
+    width: 100%; 
+    padding: 15px; 
+    background: #e74c3c; 
+    color: #fff; 
+    border: none; 
+    border-radius: 5px; 
+    cursor: pointer; 
+    font-size: 1.2rem; 
+    font-weight: bold; 
+}
+.emergency-call { 
+    text-align: center; 
+    margin-top: 20px; 
+    font-size: 1.1rem; 
+}
+.emergency-call a { 
+    font-weight: bold; 
+    color: #c0392b; 
+    text-decoration: none; 
+}
+
+/* Estilos para la sección de valores */
+.valores-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.valor-item {
+    background: #f9f9f9;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.valor-item h3 {
+    font-size: 1.5rem;
+    color: #e74c3c;
+    margin-bottom: 1rem;
+}
+
+/* Estilos para páginas de servicios */
+.page-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #eee;
+}
+
+.page-header .subtitle {
+    font-size: 1.2rem;
+    color: #666;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.service-section {
+    margin-bottom: 2.5rem;
+}
+
+.service-section h2 {
+    font-size: 2rem;
+    color: #3498db;
+    margin-bottom: 1rem;
+}
+
+.service-section h3 {
+    font-size: 1.4rem;
+    color: #555;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.service-section ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.service-section ul li {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    color: #333;
+}
+
+.service-section strong {
+    display: block;
+    margin-top: 1rem;
+    background-color: #f0f8ff;
+    padding: 1rem;
+    border-left: 4px solid #3498db;
+    border-radius: 4px;
+}
+
+footer {
+    background: #333;
+    color: white;
+    text-align: center;
+    padding: 2rem 0;
+    margin-top: 2rem; /* Añadido para separar del contenido */
+}
+
+footer p {
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+.whatsapp-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #25D366; /* Verde de WhatsApp */
+    border-radius: 50%;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    z-index: 1000;
+    transition: transform 0.3s ease;
+    animation: bounce 2s infinite; /* Animación de rebote para llamar atención */
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-10px); }
+    60% { transform: translateY(-5px); }
+}
+
+.whatsapp-button:hover {
+    transform: scale(1.1);
+}
+
+.whatsapp-button img {
+    display: block;
+    padding: 10px;
+}
