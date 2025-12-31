@@ -363,7 +363,7 @@
     font-family: 'Poppins', sans-serif; /* Fuente moderna y atractiva */
     line-height: 1.6; 
     margin: 0; 
-    padding: 0; 
+    padding-top: 120px; /* Añadido para compensar la altura de la navbar y el logo */
     background-color: #f4f4f4; 
     color: #333; 
     min-height: 100vh; 
@@ -383,7 +383,7 @@ main {
 /* Navbar */
 .navbar {
     background: linear-gradient(to right, #2c3e50, #34495e); /* Gradiente para más atractivo */
-    padding: 0.75rem 0; /* Reducir padding para hacerla más pequeña */
+    padding: 1.5rem 0; /* Aumentado para dar espacio al logo más grande */
     position: fixed;
     width: 100%;
     top: 0;
@@ -409,9 +409,13 @@ main {
 }
 
 .logo-img {
-    height: 40px; /* Reducir tamaño para barra más pequeña */
-    width: auto;
-    transition: transform 0.3s;
+    height: 100px; /* Tamaño grande para que sobresalga */
+    width: 100px;  /* Mismo ancho que alto para hacerlo circular */
+    border-radius: 50%; /* Lo convierte en un círculo */
+    object-fit: cover; /* Asegura que la imagen llene el círculo sin deformarse */
+    border: 4px solid #fff; /* Borde blanco para separarlo de la barra */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Sombra más dramática */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .logo:hover .logo-img {
@@ -906,17 +910,33 @@ footer p {
     font-size: 0.9rem;
 }
 
-.footer-social a {
-    color: #00aaff; /* Color azul brillante para el enlace */
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 1.1rem;
-    transition: color 0.3s;
+.footer-social {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-size: 1rem;
 }
 
-.footer-social a:hover {
-    color: #fff; /* Color blanco al pasar el mouse */
-    text-decoration: underline;
+.footer-social a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.footer-social img {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background-color: #000;
+    padding: 4px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.footer-social a:hover img {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.6);
 }
 
 .whatsapp-button {
