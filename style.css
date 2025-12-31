@@ -893,16 +893,30 @@ form button {
 }
 
 footer {
-    background: #333;
-    color: white;
+    background: #222; /* Fondo oscuro para el footer */
+    color: #fff;
     text-align: center;
     padding: 2rem 0;
     margin-top: 2rem; /* Añadido para separar del contenido */
+    border-top: 3px solid #00aaff; /* Línea de acento azul brillante */
 }
 
 footer p {
-    margin: 0;
+    margin: 0.5rem 0;
     font-size: 0.9rem;
+}
+
+.footer-social a {
+    color: #00aaff; /* Color azul brillante para el enlace */
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.1rem;
+    transition: color 0.3s;
+}
+
+.footer-social a:hover {
+    color: #fff; /* Color blanco al pasar el mouse */
+    text-decoration: underline;
 }
 
 .whatsapp-button {
