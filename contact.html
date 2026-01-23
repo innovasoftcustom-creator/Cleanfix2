@@ -86,7 +86,9 @@
             </p>
         </div>
     </footer>
-    <a href="https://wa.me/9085361969?text=¡Hola!%20Me%20interesa%20una%20cotización%20para%20servicios%20de%20limpieza." class="whatsapp-button" target="_blank">
+<a href="https://api.whatsapp.com/send?phone=19085361969&text=Hola%20me%20interesa%20una%20cotizacion%20para%20servicios%20de%20limpieza"
+   class="whatsapp-button"
+   target="_blank">
         <img src="img/WhatsApp.jpeg" alt="Chat en WhatsApp" width="60">
     </a>
     <script src="script.js"></script>
@@ -105,7 +107,7 @@
             const contactPreference = document.getElementById('contact-preference').value;
 
             // --- Acción 1: Preparar y abrir WhatsApp ---
-            const phoneNumber = '9085361969'; // Tu número de WhatsApp
+            const phoneNumber = '19085361969'; // Tu número de WhatsApp
             let whatsappMessage = `*Nueva Solicitud de Cotización*\n\n`;
             whatsappMessage += `*Nombre:* ${name}\n`;
             if (company) whatsappMessage += `*Empresa:* ${company}\n`;
